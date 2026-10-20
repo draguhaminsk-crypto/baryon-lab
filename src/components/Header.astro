@@ -1,0 +1,132 @@
+---
+import { site } from '../data/site';
+---
+
+<header class="site-header">
+
+  <div class="container header-inner">
+
+    <a
+      class="brand"
+      href="#inicio"
+      aria-label="Baryon Lab"
+    >
+      <img
+        src="/baryon-lab-logo.png"
+        alt="Baryon Lab"
+      />
+    </a>
+
+    <nav
+      class="desktop-nav"
+      aria-label="Menu principal"
+    >
+
+      <a href="#portfolio">
+        Portfólio
+      </a>
+
+      <a href="#como-funciona">
+        Como funciona
+      </a>
+
+      <a href="#solicitar">
+        Solicitar
+      </a>
+
+      {
+        site.instagram && (
+          <a
+            href={site.instagram}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Instagram ↗
+          </a>
+        )
+      }
+
+    </nav>
+
+    <a
+      class="header-cta"
+      href="#solicitar"
+    >
+      Pedir orçamento ↗
+    </a>
+
+    <button
+      class="menu-button"
+      type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+
+  <nav
+    class="mobile-nav"
+    hidden
+  >
+
+    <a href="#portfolio">
+      Portfólio
+    </a>
+
+    <a href="#como-funciona">
+      Como funciona
+    </a>
+
+    <a href="#solicitar">
+      Solicitar
+    </a>
+
+    <a
+      href={site.instagram}
+      target="_blank"
+    >
+      Instagram ↗
+    </a>
+
+  </nav>
+
+</header>
+
+<script>
+
+  const button =
+    document.querySelector('.menu-button');
+
+  const menu =
+    document.querySelector('.mobile-nav');
+
+  if (
+    button instanceof HTMLButtonElement &&
+    menu instanceof HTMLElement
+  ) {
+
+    button.addEventListener(
+      'click',
+      () => {
+
+        const open =
+          button.getAttribute(
+            'aria-expanded'
+          ) === 'true';
+
+        button.setAttribute(
+          'aria-expanded',
+          String(!open)
+        );
+
+        menu.hidden = open;
+
+      }
+    );
+
+  }
+
+</script>

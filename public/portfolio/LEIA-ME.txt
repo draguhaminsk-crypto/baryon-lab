@@ -1,0 +1,5 @@
+Coloque aqui as fotos dos trabalhos da Baryon Lab.
+Depois informe o caminho em src/data/site.ts.
+
+Exemplo:
+image: '/portfolio/suporte-controle.jpg'

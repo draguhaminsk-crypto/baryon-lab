@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+}
+
+const {
+  title,
+  category,
+  description,
+  image
+} = Astro.props;
+---
+
+<article class="project-card">
+
+  <div class="project-media">
+
+    <img
+      src={image}
+      alt={title}
+      loading="lazy"
+    />
+
+  </div>
+
+  <div class="project-content">
+
+    <p class="project-category">
+      {category}
+    </p>
+
+    <h3>
+      {title}
+    </h3>
+
+    <p>
+      {description}
+    </p>
+
+  </div>
+
+</article>

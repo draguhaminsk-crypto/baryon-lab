@@ -1,0 +1,216 @@
+
+---
+import { site } from '../data/site';
+---
+
+<form class="request-form" id="request-form">
+
+  <div class="field-grid">
+    <label>
+      <span>Seu nome *</span>
+      <input
+        id="name"
+        type="text"
+        placeholder="Como podemos te chamar?"
+        required
+      />
+    </label>
+
+    <label>
+      <span>Tipo de projeto *</span>
+      <select id="type" required>
+        <option value="Projeto personalizado">Projeto personalizado</option>
+        <option value="Miniatura / decoração">Miniatura / decoração</option>
+        <option value="Peça funcional">Peça funcional</option>
+        <option value="Protótipo">Protótipo</option>
+        <option value="Outro">Outro</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="field-grid">
+    <label>
+      <span>Quantidade</span>
+      <input
+        id="quantity"
+        type="number"
+        min="1"
+        value="1"
+        required
+      />
+    </label>
+
+    <label>
+      <span>Tamanho aproximado</span>
+      <input
+        id="size"
+        type="text"
+        placeholder="Ex.: 15 cm"
+      />
+    </label>
+  </div>
+
+  <label>
+    <span>Você já possui o arquivo STL?</span>
+    <select id="file">
+      <option value="Ainda não">Ainda não</option>
+      <option value="Sim">Sim</option>
+      <option value="Tenho apenas uma referência">
+        Tenho apenas uma referência
+      </option>
+    </select>
+  </label>
+
+  <label>
+    <span>Conte sobre sua ideia *</span>
+    <textarea
+      id="description"
+      rows="5"
+      placeholder="O que você quer imprimir? Tem alguma referência, medida ou detalhe importante?"
+      required
+    ></textarea>
+  </label>
+
+  <div class="form-footer">
+    <p>
+      Suas informações serão organizadas em uma mensagem
+      para enviarmos seu pedido pelo WhatsApp.
+    </p>
+
+    <button class="button button-purple" type="submit">
+      Solicitar orçamento ↗
+    </button>
+  </div>
+
+</form>
+
+<style>
+  .request-form {
+    display: grid;
+    gap: 18px;
+    padding: 28px;
+    background: #f7f4ed;
+    color: #0c0c0c;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .request-form label {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .request-form label > span {
+    color: #0c0c0c;
+    font-family: "DM Mono", monospace;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .request-form input,
+  .request-form select,
+  .request-form textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    margin: 0;
+    padding: 12px;
+    border: 2px solid #0c0c0c;
+    border-radius: 0;
+    background: #fffdf8;
+    color: #0c0c0c;
+    font: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
+
+  .request-form textarea {
+    height: 140px;
+    min-height: 140px;
+    resize: vertical;
+  }
+
+  .request-form input:focus,
+  .request-form select:focus,
+  .request-form textarea:focus {
+    outline: 2px solid #c9b6ff;
+    outline-offset: 2px;
+  }
+
+  .form-footer {
+    display: grid;
+    gap: 18px;
+    margin-top: 4px;
+  }
+
+  .form-footer p {
+    margin: 0;
+    color: #69665f;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .form-footer button {
+    justify-self: start;
+  }
+
+  @media (max-width: 620px) {
+    .request-form {
+      padding: 18px;
+    }
+
+    .field-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-footer button {
+      width: 100%;
+    }
+  }
+</style>
+
+<script define:vars={{ whatsapp: site.whatsapp }}>
+  const form = document.querySelector('#request-form');
+
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const getValue = (id) => {
+        const element = form.querySelector(`#${id}`);
+        return element instanceof HTMLInputElement ||
+          element instanceof HTMLSelectElement ||
+          element instanceof HTMLTextAreaElement
+          ? element.value.trim()
+          : '';
+      };
+
+      const message = [
+        'Olá! Vim pelo site da Baryon Lab e gostaria de solicitar um orçamento.',
+        '',
+        `Nome: ${getValue('name')}`,
+        `Tipo de projeto: ${getValue('type')}`,
+        `Quantidade: ${getValue('quantity')}`,
+        `Tamanho aproximado: ${getValue('size') || 'Não informado'}`,
+        `Arquivo STL: ${getValue('file')}`,
+        '',
+        'Descrição do projeto:',
+        getValue('description')
+      ].join('\n');
+
+      const url =
+        `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  }
+</script>
