@@ -1,117 +1,216 @@
-<form id="request-form" class="request-form">
-  <div class="form-field">
-    <label for="client-name">Seu nome *</label>
-    <input
-      id="client-name"
-      name="name"
-      type="text"
-      placeholder="Como podemos te chamar?"
-      autocomplete="name"
-      required
-    />
+
+---
+import { site } from '../data/site';
+---
+
+<form class="request-form" id="request-form">
+
+  <div class="field-grid">
+    <label>
+      <span>Seu nome *</span>
+      <input
+        id="name"
+        type="text"
+        placeholder="Como podemos te chamar?"
+        required
+      />
+    </label>
+
+    <label>
+      <span>Tipo de projeto *</span>
+      <select id="type" required>
+        <option value="Projeto personalizado">Projeto personalizado</option>
+        <option value="Miniatura / decoração">Miniatura / decoração</option>
+        <option value="Peça funcional">Peça funcional</option>
+        <option value="Protótipo">Protótipo</option>
+        <option value="Outro">Outro</option>
+      </select>
+    </label>
   </div>
 
-  <div class="form-row">
-    <div class="form-field">
-      <label for="project-type">Tipo de projeto *</label>
-      <select id="project-type" name="type" required>
-        <option value="" disabled selected>Selecione</option>
-        <option>Miniatura / colecionável</option>
-        <option>Peça funcional</option>
-        <option>Protótipo</option>
-        <option>Decoração</option>
-        <option>Peça personalizada</option>
-        <option>Outro</option>
-      </select>
-    </div>
-
-    <div class="form-field">
-      <label for="project-quantity">Quantidade</label>
+  <div class="field-grid">
+    <label>
+      <span>Quantidade</span>
       <input
-        id="project-quantity"
-        name="quantity"
+        id="quantity"
         type="number"
         min="1"
-        placeholder="Ex.: 2"
+        value="1"
+        required
       />
-    </div>
+    </label>
+
+    <label>
+      <span>Tamanho aproximado</span>
+      <input
+        id="size"
+        type="text"
+        placeholder="Ex.: 15 cm"
+      />
+    </label>
   </div>
 
-  <div class="form-field">
-    <label for="project-size">Tamanho aproximado</label>
-    <input
-      id="project-size"
-      name="size"
-      type="text"
-      placeholder="Ex.: 15 cm de altura"
-    />
-  </div>
+  <label>
+    <span>Você já possui o arquivo STL?</span>
+    <select id="file">
+      <option value="Ainda não">Ainda não</option>
+      <option value="Sim">Sim</option>
+      <option value="Tenho apenas uma referência">
+        Tenho apenas uma referência
+      </option>
+    </select>
+  </label>
 
-  <div class="form-field">
-    <label for="project-description">Conte sobre sua ideia *</label>
+  <label>
+    <span>Conte sobre sua ideia *</span>
     <textarea
-      id="project-description"
-      name="description"
+      id="description"
       rows="5"
-      placeholder="Explique o que você quer imprimir ou criar..."
+      placeholder="O que você quer imprimir? Tem alguma referência, medida ou detalhe importante?"
       required
     ></textarea>
+  </label>
+
+  <div class="form-footer">
+    <p>
+      Suas informações serão organizadas em uma mensagem
+      para enviarmos seu pedido pelo WhatsApp.
+    </p>
+
+    <button class="button button-purple" type="submit">
+      Solicitar orçamento ↗
+    </button>
   </div>
 
-  <div class="form-field">
-    <label for="project-reference">Link de referência (opcional)</label>
-    <input
-      id="project-reference"
-      name="reference"
-      type="url"
-      placeholder="https://..."
-    />
-  </div>
-
-  <button class="button button-dark form-submit" type="submit">
-    Enviar pelo WhatsApp ↗
-  </button>
-
-  <p class="form-note">
-    O formulário abre o WhatsApp com os dados preenchidos.
-    Você poderá anexar fotos e arquivos na conversa.
-  </p>
 </form>
 
-<script>
-  const form = document.querySelector<HTMLFormElement>('#request-form');
+<style>
+  .request-form {
+    display: grid;
+    gap: 18px;
+    padding: 28px;
+    background: #f7f4ed;
+    color: #0c0c0c;
+  }
 
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
 
-    if (!form.reportValidity()) return;
+  .request-form label {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+  }
 
-    const data = new FormData(form);
+  .request-form label > span {
+    color: #0c0c0c;
+    font-family: "DM Mono", monospace;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
 
-    const get = (key: string) =>
-      String(data.get(key) ?? '').trim();
+  .request-form input,
+  .request-form select,
+  .request-form textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    margin: 0;
+    padding: 12px;
+    border: 2px solid #0c0c0c;
+    border-radius: 0;
+    background: #fffdf8;
+    color: #0c0c0c;
+    font: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
 
-    const message = [
-      'Olá! Gostaria de solicitar um projeto na Baryon Lab.',
-      '',
-      `Nome: ${get('name')}`,
-      `Tipo: ${get('type')}`,
-      get('quantity') ? `Quantidade: ${get('quantity')}` : '',
-      get('size') ? `Tamanho: ${get('size')}` : '',
-      '',
-      'Descrição do projeto:',
-      get('description'),
-      get('reference')
-        ? `\nReferência: ${get('reference')}`
-        : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
+  .request-form textarea {
+    height: 140px;
+    min-height: 140px;
+    resize: vertical;
+  }
 
-    const url =
-      'https://wa.me/5541991613019?text=' +
-      encodeURIComponent(message);
+  .request-form input:focus,
+  .request-form select:focus,
+  .request-form textarea:focus {
+    outline: 2px solid #c9b6ff;
+    outline-offset: 2px;
+  }
 
-    window.open(url, '_blank', 'noopener,noreferrer');
-  });
+  .form-footer {
+    display: grid;
+    gap: 18px;
+    margin-top: 4px;
+  }
+
+  .form-footer p {
+    margin: 0;
+    color: #69665f;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .form-footer button {
+    justify-self: start;
+  }
+
+  @media (max-width: 620px) {
+    .request-form {
+      padding: 18px;
+    }
+
+    .field-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-footer button {
+      width: 100%;
+    }
+  }
+</style>
+
+<script define:vars={{ whatsapp: site.whatsapp }}>
+  const form = document.querySelector('#request-form');
+
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const getValue = (id) => {
+        const element = form.querySelector(`#${id}`);
+        return element instanceof HTMLInputElement ||
+          element instanceof HTMLSelectElement ||
+          element instanceof HTMLTextAreaElement
+          ? element.value.trim()
+          : '';
+      };
+
+      const message = [
+        'Olá! Vim pelo site da Baryon Lab e gostaria de solicitar um orçamento.',
+        '',
+        `Nome: ${getValue('name')}`,
+        `Tipo de projeto: ${getValue('type')}`,
+        `Quantidade: ${getValue('quantity')}`,
+        `Tamanho aproximado: ${getValue('size') || 'Não informado'}`,
+        `Arquivo STL: ${getValue('file')}`,
+        '',
+        'Descrição do projeto:',
+        getValue('description')
+      ].join('\n');
+
+      const url =
+        `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  }
 </script>

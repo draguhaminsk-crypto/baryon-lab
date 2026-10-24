@@ -1,71 +1,114 @@
+
 ---
 import Header from '../components/Header.astro';
 import RequestForm from '../components/RequestForm.astro';
 import Layout from '../layouts/Layout.astro';
 import { site } from '../data/site';
 
-const base = import.meta.env.BASE_URL;
+// =============================================
+// PORTFÓLIO BARYON LAB
+// Cada projeto tem 3 fotos independentes:
+// image      = foto principal, com texto
+// sideImage1 = primeira foto secundária
+// sideImage2 = segunda foto secundária
+//
+// Para trocar uma foto, substitua somente a URL.
+// =============================================
 
 const portfolioProjects = [
   {
     title: 'Miniaturas e colecionáveis',
     category: 'Decoração',
     description:
-      'Personagens, figuras e peças especiais para colecionar, presentear ou decorar.',
+      'Personagens, miniaturas, bustos e peças para coleção.',
+
+    // FOTO PRINCIPAL
     image:
-      'https://makerworld.bblmw.com/makerworld/model/USd7e00efde266eb/design/243d17e5563d9881.jpg?x-oss-process=image/resize,w_1000/format,webp',
+      'https://makerworld.bblmw.com/makerworld/model/USd7e00efde266eb/design/243d17e5563d9881.jpg?x-oss-process=image/resize,w_1000/format,webp ',
+
+    // FOTO SECUNDÁRIA 1
     sideImage1:
-      'https://images.unsplash.com/photo-1756723902896-94e2d9332fbd?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/USc4803a07f96d5d/design/2025-10-13_15c8fd4996fdd8.png?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 2
     sideImage2:
-      'https://images.unsplash.com/photo-1741517669003-94a4cb80f793?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/USf55c72bf8377fc/design/133d98baea508fd0.jpg?x-oss-process=image/resize,w_1000/format,webp',
   },
+
   {
     title: 'Peças funcionais',
     category: 'Utilidades',
     description:
-      'Soluções práticas, suportes e peças pensadas para resolver problemas do dia a dia.',
+      'Suportes, organizadores, encaixes e soluções para o dia a dia.',
+
+    // FOTO PRINCIPAL
     image:
-      'https://images.unsplash.com/photo-1741517669003-94a4cb80f793?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US7c3849a039536f/design/2025-10-25_7ae6a1c0233928.png?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 1
     sideImage1:
-      'https://images.unsplash.com/photo-1756723901904-15a28ffb0814?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US3e25ab3961782d/design/d8406c655fdfc6cf.png?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 2
     sideImage2:
-      'https://images.unsplash.com/photo-1756723902460-235b1f21ad05?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US57eb8de4b7ad21/design/2024-11-16_941b5395e8f9e8.jpeg?x-oss-process=image/resize,w_1000/format,webp',
   },
+
   {
-    title: 'Projetos personalizados',
+    title: 'Datas festivas',
     category: 'Custom',
     description:
-      'Ideias que começam como referência e ganham uma forma própria.',
+      'Você manda a ideia, referência ou arquivo e a gente vê como transformar em peça.',
+
+    // FOTO PRINCIPAL
     image:
-      'https://images.unsplash.com/photo-1756723901904-15a28ffb0814?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US8adad954d65a5/design/cd417df487b05d75.png?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 1
     sideImage1:
-      'https://images.unsplash.com/photo-1756723903184-32fed816ea5d?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US348cbd57d37b41/design/53c4087a0b48947c.jpg?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 2
     sideImage2:
-      'https://images.unsplash.com/photo-1756723902896-94e2d9332fbd?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US3aacb541586ebb/design/2025-12-19_e9bf4d0c766c3.png?x-oss-process=image/resize,w_1000/format,webp',
   },
+
   {
-    title: 'Peças sob medida',
+    title: 'Presentes',
     category: 'Personalização',
     description:
       'Soluções pensadas para encaixar na sua ideia e no seu uso.',
+
+    // FOTO PRINCIPAL
     image:
-      'https://images.unsplash.com/photo-1756723902460-235b1f21ad05?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/USb1516eb72c7ec5/design/8a4ce02695a96164.jpg?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 1
     sideImage1:
-      'https://images.unsplash.com/photo-1756723901904-15a28ffb0814?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/USb830443c33dbb8/design/2025-11-02_028559fc2fdd68.png?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 2
     sideImage2:
-      'https://images.unsplash.com/photo-1756723903184-32fed816ea5d?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US88035cab982830/design/2025-06-10_3f15d507348a08.png?x-oss-process=image/resize,w_1000/format,webp',
   },
+
   {
-    title: 'Decoração e utilidades',
+    title: 'TCG',
     category: 'Objetos',
     description:
       'Peças criativas para organizar, decorar e dar forma às suas ideias.',
+
+    // FOTO PRINCIPAL
     image:
-      'https://images.unsplash.com/photo-1756723903184-32fed816ea5d?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US45b41a4f54e1a3/design/2025-10-30_728ca6075455f.jpg?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 1
     sideImage1:
-      'https://images.unsplash.com/photo-1756723902896-94e2d9332fbd?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/USa23f5e77fd1c0b/design/2025-09-04_23e5ea7d29ccd8.jpg?x-oss-process=image/resize,w_1000/format,webp',
+
+    // FOTO SECUNDÁRIA 2
     sideImage2:
-      'https://images.unsplash.com/photo-1741517669003-94a4cb80f793?auto=format&fit=crop&fm=jpg&q=82&w=1600',
+      'https://makerworld.bblmw.com/makerworld/model/US68024cc20c7386/design/08a6572153c584ee.png?x-oss-process=image/resize,w_1000/format,webp',
   },
 ];
 ---
@@ -77,13 +120,19 @@ const portfolioProjects = [
   <Header />
 
   <main>
+
     <!-- HERO -->
+
     <section class="hero" id="inicio">
+
       <div class="container hero-grid">
+
         <div class="hero-copy">
+
           <div class="hero-label">
             <span class="dot"></span>
-            IMPRESSÃO 3D / PROJETOS SOB MEDIDA
+            IMPRESSÃO 3D /
+            PROJETOS SOB MEDIDA
           </div>
 
           <h1>
@@ -92,12 +141,17 @@ const portfolioProjects = [
           </h1>
 
           <p class="hero-text">
-            A Baryon Lab transforma referências, arquivos e ideias
-            em objetos reais. Peças funcionais, miniaturas,
-            protótipos e projetos personalizados.
+            A Baryon Lab transforma
+            referências, arquivos e ideias
+            em objetos reais.
+
+            Peças funcionais, miniaturas,
+            protótipos e projetos
+            personalizados.
           </p>
 
           <div class="hero-actions">
+
             <a href="#solicitar" class="button button-purple">
               Fazer um projeto ↗
             </a>
@@ -105,10 +159,13 @@ const portfolioProjects = [
             <a href="#portfolio" class="button button-outline">
               Ver portfólio
             </a>
+
           </div>
+
         </div>
 
         <div class="hero-visual">
+
           <div class="hero-visual-top">
             <span>BARYON / LAB</span>
             <span>3D.001</span>
@@ -116,9 +173,8 @@ const portfolioProjects = [
 
           <div class="hero-logo">
             <img
-              src={`${base}baryon-lab-logo.png`}
-              alt="Logo da Baryon Lab"
-              loading="eager"
+              src="/baryon-lab/baryon-lab-logo.png"
+              alt="Baryon Lab"
             />
           </div>
 
@@ -127,11 +183,13 @@ const portfolioProjects = [
             <span>PRINT</span>
             <span>BUILD</span>
           </div>
+
         </div>
+
       </div>
 
-      <div class="ticker" aria-label="Serviços da Baryon Lab">
-        <div class="ticker-track">
+      <div class="ticker">
+        <div>
           <span>IMPRESSÃO 3D ✦</span>
           <span>PEÇAS PERSONALIZADAS ✦</span>
           <span>PROTOTIPAGEM ✦</span>
@@ -142,240 +200,380 @@ const portfolioProjects = [
           <span>PROTOTIPAGEM ✦</span>
         </div>
       </div>
+
     </section>
 
     <!-- MANIFESTO -->
+
     <section class="manifesto">
+
       <div class="container">
-        <span class="tiny-title">[ BARYON LAB ]</span>
+
+        <span class="tiny-title">
+          [ BARYON LAB ]
+        </span>
 
         <p>
           NÃO É SÓ APERTAR
-          <strong>PRINT.</strong>
+          <strong> PRINT. </strong>
+
           É PEGAR UMA IDEIA
           E FAZER ELA
-          <span>EXISTIR.</span>
+
+          <span> EXISTIR. </span>
         </p>
+
       </div>
+
     </section>
 
     <!-- PORTFÓLIO -->
+
     <section class="section portfolio" id="portfolio">
+
       <div class="container">
+
         <div class="section-heading">
+
           <div>
-            <p class="tiny-title">[ PORTFÓLIO ]</p>
+
+            <p class="tiny-title">
+              [ PORTFÓLIO ]
+            </p>
+
             <h2>
               Coisas que saíram
-              <span>da bancada.</span>
+              <span> da bancada. </span>
             </h2>
+
           </div>
 
-          <p class="section-description">
-            Algumas imagens ainda são provisórias.
-            Conforme novos projetos forem sendo feitos,
-            esse espaço vira o arquivo real da Baryon Lab.
+          <p>
+            Algumas imagens ainda são
+            provisórias. Conforme novos
+            projetos forem sendo feitos,
+            esse espaço vira o arquivo
+            real da Baryon Lab.
           </p>
+
         </div>
 
         <div class="portfolio-compositions">
+
           {
             portfolioProjects.map((project, index) => (
               <article
                 class={`portfolio-composition composition-${index + 1}`}
+                key={project.title}
               >
+
                 <!-- CARD PRINCIPAL -->
+
                 <div class="portfolio-main-card">
+
                   <span class="project-number">
-                    {String(index + 1).padStart(2, '0')}
+                    0{index + 1}
                   </span>
 
                   <div class="portfolio-main-media">
+
                     <img
                       src={project.image}
                       alt={project.title}
                       loading={index === 0 ? 'eager' : 'lazy'}
                     />
+
                   </div>
 
                   <div class="project-content">
+
                     <p class="project-category">
                       {project.category}
                     </p>
 
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
+                    <h3>
+                      {project.title}
+                    </h3>
+
+                    <p>
+                      {project.description}
+                    </p>
+
                   </div>
+
                 </div>
 
-                <!-- FOTO LATERAL 1 -->
+                <!-- FOTO SECUNDÁRIA 1: SOMENTE IMAGEM -->
+
                 <div class="portfolio-photo">
+
                   <img
                     src={project.sideImage1}
                     alt={`${project.title} — foto complementar 1`}
                     loading="lazy"
                   />
+
                 </div>
 
-                <!-- FOTO LATERAL 2 -->
+                <!-- FOTO SECUNDÁRIA 2: SOMENTE IMAGEM -->
+
                 <div class="portfolio-photo">
+
                   <img
                     src={project.sideImage2}
                     alt={`${project.title} — foto complementar 2`}
                     loading="lazy"
                   />
+
                 </div>
+
               </article>
             ))
           }
+
         </div>
+
       </div>
+
     </section>
 
     <!-- FAIXA ROXA -->
+
     <div class="purple-strip">
-      <div class="strip-track">
+
+      <div>
         <span>MODELAR ✦</span>
         <span>TESTAR ✦</span>
         <span>IMPRIMIR ✦</span>
         <span>MONTAR ✦</span>
         <span>REPETIR ✦</span>
-        <span>MODELAR ✦</span>
-        <span>TESTAR ✦</span>
       </div>
+
     </div>
 
     <!-- PROCESSO -->
+
     <section class="section process" id="como-funciona">
+
       <div class="container">
+
         <div class="process-heading">
-          <p class="tiny-title">[ COMO FUNCIONA ]</p>
+
+          <p class="tiny-title">
+            [ COMO FUNCIONA ]
+          </p>
+
           <h2>
             Do arquivo
-            <span>pra sua mão.</span>
+            <span> pra sua mão. </span>
           </h2>
+
         </div>
 
         <div class="process-grid">
+
           <article>
-            <span class="step-number">01</span>
-            <h3>Você manda a ideia</h3>
+
+            <span>01</span>
+
+            <h3>
+              Você manda
+              a ideia
+            </h3>
+
             <p>
-              Pode ser STL, foto, referência, desenho
-              ou simplesmente uma explicação.
+              Pode ser STL, foto,
+              referência, desenho ou
+              simplesmente uma explicação.
             </p>
+
           </article>
 
           <article>
-            <span class="step-number">02</span>
-            <h3>A gente planeja</h3>
+
+            <span>02</span>
+
+            <h3>
+              A gente
+              planeja
+            </h3>
+
             <p>
-              Tamanho, material, resistência,
-              acabamento e quantidade.
+              Tamanho, material,
+              resistência, acabamento
+              e quantidade.
             </p>
+
           </article>
 
           <article>
-            <span class="step-number">03</span>
-            <h3>A máquina trabalha</h3>
+
+            <span>03</span>
+
+            <h3>
+              A máquina
+              trabalha
+            </h3>
+
             <p>
-              A peça ganha forma camada por camada.
+              A peça ganha forma
+              camada por camada.
             </p>
+
           </article>
 
           <article>
-            <span class="step-number">04</span>
-            <h3>Projeto pronto</h3>
+
+            <span>04</span>
+
+            <h3>
+              Projeto
+              pronto
+            </h3>
+
             <p>
-              Ajustes, acabamento, montagem e entrega.
+              Ajustes, acabamento,
+              montagem e entrega.
             </p>
+
           </article>
+
         </div>
+
       </div>
+
     </section>
 
-    <!-- CHAMADA -->
+    <!-- CTA -->
+
     <section class="big-cta">
+
       <div class="container">
+
         <p>
-          TEM UMA IDEIA MEIO
-          <span>ESTRANHA?</span>
+          TEM UMA
+          IDEIA MEIO
+          <span> ESTRANHA? </span>
         </p>
 
         <a href="#solicitar">
           ÓTIMO. VAMOS FAZER ↘
         </a>
+
       </div>
+
     </section>
 
     <!-- SOLICITAÇÃO -->
+
     <section class="section request" id="solicitar">
+
       <div class="container request-grid">
+
         <div class="request-copy">
-          <p class="tiny-title">[ SOLICITAR PROJETO ]</p>
+
+          <p class="tiny-title">
+            [ SOLICITAR PROJETO ]
+          </p>
 
           <h2>
             Bora fazer
-            <span>isso.</span>
+            <span> isso.</span>
           </h2>
 
-          <p class="request-description">
-            Conta pra gente o que você precisa.
-            O formulário organiza as informações
-            e abre tudo no WhatsApp.
+          <p>
+            Conta pra gente o que
+            você precisa.
+
+            O formulário organiza
+            as informações e abre
+            tudo no WhatsApp.
           </p>
 
           <div class="whatsapp-box">
+
             <small>WHATSAPP</small>
-            <strong>41 99161-3019</strong>
+
+            <strong>
+              41 99161-3019
+            </strong>
+
           </div>
+
         </div>
 
         <div class="form-box">
+
           <div class="form-title">
             <span>NOVO PROJETO</span>
             <span>BARYON_REQUEST</span>
           </div>
 
           <RequestForm />
+
         </div>
+
       </div>
+
     </section>
+
   </main>
 
-  <!-- RODAPÉ -->
+  <!-- FOOTER -->
+
   <footer class="footer">
+
     <div class="container footer-grid">
-      <a class="footer-logo" href="#inicio">
-        <img
-          src={`${base}baryon-lab-logo.png`}
-          alt="Baryon Lab"
-          loading="lazy"
-        />
-      </a>
+
+      <img
+        src="/baryon-lab/baryon-lab-logo.png"
+        alt="Baryon Lab"
+      />
 
       <div class="footer-name">
         BARYON
-        <span>LAB</span>
+        <br />
+        LAB
       </div>
 
-      <nav aria-label="Links do rodapé">
-        <a href="#inicio">Topo ↑</a>
-        <a href="#portfolio">Portfólio</a>
-        <a href="#solicitar">Orçamento</a>
+      <nav>
+
+        <a href="#inicio">
+          Topo ↑
+        </a>
+
+        <a href="#portfolio">
+          Portfólio
+        </a>
+
+        <a href="#solicitar">
+          Orçamento
+        </a>
+
         <a
           href={site.instagram}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noreferrer"
         >
           Instagram ↗
         </a>
+
       </nav>
+
     </div>
 
     <div class="footer-bottom">
-      <span>BARYON LAB © 2026</span>
-      <span>IDEIA → MODELO → OBJETO</span>
+
+      <span>
+        BARYON LAB © 2026
+      </span>
+
+      <span>
+        IDEIA → MODELO → OBJETO
+      </span>
+
     </div>
+
   </footer>
+
 </Layout>
