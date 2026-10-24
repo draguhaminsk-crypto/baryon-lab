@@ -1,132 +1,56 @@
 ---
 import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
 ---
 
-<header class="site-header">
-
+<header class="site-header" id="topo">
   <div class="container header-inner">
-
-    <a
-      class="brand"
-      href="#inicio"
-      aria-label="Baryon Lab"
-    >
+    <a class="brand" href="#inicio" aria-label="Baryon Lab — início">
       <img
-       src="/baryon-lab/baryon-lab-logo.png"
+        src={`${base}baryon-lab-logo.png`}
         alt="Baryon Lab"
       />
+      <span class="brand-fallback">BARYON LAB</span>
     </a>
 
-    <nav
-      class="desktop-nav"
-      aria-label="Menu principal"
-    >
-
-      <a href="#portfolio">
-        Portfólio
+    <nav class="desktop-nav" aria-label="Navegação principal">
+      <a href="#portfolio">Portfólio</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#solicitar">Solicitar</a>
+      <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+        Instagram ↗
       </a>
-
-      <a href="#como-funciona">
-        Como funciona
-      </a>
-
-      <a href="#solicitar">
-        Solicitar
-      </a>
-
-      {
-        site.instagram && (
-          <a
-            href={site.instagram}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Instagram ↗
-          </a>
-        )
-      }
-
     </nav>
 
-    <a
-      class="header-cta"
-      href="#solicitar"
-    >
+    <a class="header-cta button button-purple" href="#solicitar">
       Pedir orçamento ↗
     </a>
 
-    <button
-      class="menu-button"
-      type="button"
-      aria-label="Abrir menu"
-      aria-expanded="false"
-    >
-      <span></span>
-      <span></span>
-    </button>
+    <details class="mobile-menu">
+      <summary aria-label="Abrir ou fechar menu">
+        <span>MENU</span>
+        <span class="menu-symbol" aria-hidden="true"></span>
+      </summary>
 
+      <nav aria-label="Navegação mobile">
+        <a href="#portfolio">Portfólio <span>↗</span></a>
+        <a href="#como-funciona">Como funciona <span>↗</span></a>
+        <a href="#solicitar">Solicitar projeto <span>↗</span></a>
+        <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+          Instagram <span>↗</span>
+        </a>
+      </nav>
+    </details>
   </div>
-
-  <nav
-    class="mobile-nav"
-    hidden
-  >
-
-    <a href="#portfolio">
-      Portfólio
-    </a>
-
-    <a href="#como-funciona">
-      Como funciona
-    </a>
-
-    <a href="#solicitar">
-      Solicitar
-    </a>
-
-    <a
-      href={site.instagram}
-      target="_blank"
-    >
-      Instagram ↗
-    </a>
-
-  </nav>
-
 </header>
 
 <script>
+  const mobileMenu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
 
-  const button =
-    document.querySelector('.menu-button');
-
-  const menu =
-    document.querySelector('.mobile-nav');
-
-  if (
-    button instanceof HTMLButtonElement &&
-    menu instanceof HTMLElement
-  ) {
-
-    button.addEventListener(
-      'click',
-      () => {
-
-        const open =
-          button.getAttribute(
-            'aria-expanded'
-          ) === 'true';
-
-        button.setAttribute(
-          'aria-expanded',
-          String(!open)
-        );
-
-        menu.hidden = open;
-
-      }
-    );
-
-  }
-
+  mobileMenu?.querySelectorAll('nav a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu.open = false;
+    });
+  });
 </script>

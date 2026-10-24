@@ -8,24 +8,33 @@ interface Props {
 
 const {
   title = 'Baryon Lab — Impressão 3D',
-  description = 'Portfólio e solicitações de impressão 3D da Baryon Lab.',
+  description = 'Impressão 3D, miniaturas, peças funcionais e projetos personalizados.',
 } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta name="theme-color" content="#f0ede5" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#111111" />
-   <link
-  rel="icon"
-  type="image/png"
-  href="/baryon-lab/baryon-lab-logo.png"
-/>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href={`${base}baryon-lab-logo.png`}
+    />
+
     <title>{title}</title>
   </head>
+
   <body>
     <slot />
   </body>
