@@ -1,5 +1,7 @@
 ---
 import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <header class="site-header">
@@ -12,7 +14,7 @@ import { site } from '../data/site';
       aria-label="Baryon Lab"
     >
       <img
-        src="/baryon-lab-logo.png"
+        src={`${base}baryon-lab-logo.png`}
         alt="Baryon Lab"
       />
     </a>
